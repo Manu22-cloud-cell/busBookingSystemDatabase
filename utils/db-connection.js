@@ -1,52 +1,18 @@
-const mysql=require('mysql2');
+const {Sequelize}=require('sequelize');
 
-const connection=mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'252582',
-    database:'busbookingsystemdb'
+const sequelize=new Sequelize('busbookingsystemdb','root','252582',{
+    host:"localhost",
+    dialect:"mysql"
 });
 
-connection.connect((err)=>{
-    if(err){
-        console.log(err);
-        return;
-    }
-    console.log("Connection has been created");
 
-    const queries =[
+(async ()=>{
+    try {
+    await sequelize.authenticate();
+    console.log("Connection to the Database has been created");
+} catch (error) {
+    console.log(error);
+}
+})();
 
-    `CREATE TABLE IF NOT EXISTS Users(
-    userId INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL
-    )`,
-
-    `CREATE TABLE IF NOT EXISTS Buses(
-    busId INT AUTO_INCREMENT PRIMARY KEY,
-    busNumber VARCHAR(50) NOT NULL,
-    totalSeats INT NOT NULL,
-    availableSeats INT NOT NULL
-    )`,
-
-    `CREATE TABLE IF NOT EXISTS Bookings(
-    bookingId INT AUTO_INCREMENT PRIMARY KEY,
-    seatNumber INT NOT NULL
-    )`,
-
-    `CREATE TABLE IF NOT EXISTS Payments(
-    paymentId INT AUTO_INCREMENT PRIMARY KEY,
-    amountPaid INT NOT NULL,
-    paymentStatus VARCHAR(50) NOT NULL
-    )`
-];
-
-queries.forEach((query)=>{
-    connection.query(query,(err)=>{
-        if(err) console.log(err);
-        else console.log("Table created (or already existed)");
-    });
-});  
-});
-
-module.exports=connection;
+module.exports=sequelize;

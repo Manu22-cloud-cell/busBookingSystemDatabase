@@ -1,36 +1,29 @@
-const db=require('../utils/db-connection')
+const db=require('../utils/db-connection');
+const User=require('../models/users');
 
-const addUsers=(req,res)=>{
-    const {name,email}=req.body;
-    const insertQuery='INSERT INTO Users (name,email) VALUES (?,?)';
+const addUsers= async (req,res)=>{
+    try {
+        const {name,email}=req.body;
+        const user= await User.create({
+        name:name,
+        email:email
+    });
+       res.status(200).send(`User with name ${name} successfully added`)
+    } catch (error) {
+        res.status(500).send('Unable to make any entry');
+    }
+};
 
-    db.execute(insertQuery,[name,email],(err)=>{
-        if(err){
-            console.log(err.message);
-            res.status(500).send(err.message);
-            db.end();
-            return;
-        }
-
-        console.log("Value has been inserted");
-        res.status(200).send(`User with name ${name} successfully added`);
-    })
-}
-
-const getUsers=(req,res)=>{
-
-    const getUsersQuery='SELECT * FROM Users';
-    db.execute(getUsersQuery,(err,rows)=>{
-        if(err){
-            console.log(err.message);
-            res.status(500).send(err.message);
-            db.end();
-            return;
-        }
+const getUsers= async (req,res)=>{
+    try {
+        const users= await User.findAll();
         console.log("Fetching all users list");
-        res.status(200).json(rows);
-    })
-}
+        res.status(200).send(users);
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).send(error.message) 
+    }
+};
 
 module.exports={
     addUsers,
