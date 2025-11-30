@@ -4,5 +4,6 @@ const router=express.Router();
 
 router.post("/add",usersController.addUsers);
 router.get('/',usersController.getUsers);
+router.get('/:id/bookings',usersController.getUserBookings);
 
 module.exports=router;

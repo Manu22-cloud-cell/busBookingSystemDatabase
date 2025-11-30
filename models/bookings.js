@@ -1,22 +1,27 @@
-const {DataTypes}=require('sequelize');
+const {Sequelize,DataTypes}=require('sequelize');
 const sequelize=require('../utils/db-connection');
 
 const Booking = sequelize.define(
-    "Booking",
+    "Bookings",
     {
         bookingId: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
+        userId:{
+            type:DataTypes.INTEGER,
+            allowNull:false
+        },
+        busId:{
+            type:DataTypes.INTEGER,
+            allowNull:false
+
+        },
         seatNumber: {
             type: DataTypes.INTEGER,
             allowNull: false
         }
-    },
-    {
-        tableName: "Bookings",
-        timestamps: false
     }
 );
 

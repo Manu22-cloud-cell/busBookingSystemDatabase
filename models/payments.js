@@ -1,8 +1,8 @@
-const {DataTypes}=require('sequelize');
+const {Sequelize,DataTypes}=require('sequelize');
 const sequelize=require('../utils/db-connection');
 
 const Payment = sequelize.define(
-    "Payment",
+    "Payments",
     {
         paymentId: {
             type: DataTypes.INTEGER,
@@ -17,10 +17,6 @@ const Payment = sequelize.define(
             type: DataTypes.STRING(50),
             allowNull: false
         }
-    },
-    {
-        tableName: "Payments",
-        timestamps: false
     }
 );
 

@@ -1,8 +1,8 @@
-const {DataTypes}=require('sequelize');
+const {Sequelize,DataTypes}=require('sequelize');
 const sequelize=require('../utils/db-connection');
 
 const Bus = sequelize.define(
-    "Bus",{
+    "Buses",{
         busId:{
             type:DataTypes.INTEGER,
             primaryKey:true,
@@ -20,10 +20,6 @@ const Bus = sequelize.define(
             type:DataTypes.INTEGER,
             allowNull:false
         }
-    },
-    {
-        tableName:"Buses",
-        timestamps:false
     }
 );
 
